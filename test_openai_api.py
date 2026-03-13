@@ -13,7 +13,7 @@ Setup (use a venv to avoid system Python restrictions):
 
 Run:
   python test_openai_api.py [--host localhost] [--port 8000]
-  python test_openai_api.py --host 10.10.1.153   # direct if on same network
+  python test_openai_api.py --host $VLLM_HOST   # direct if on same network
 
 Curl (with tunnel; key required): curl -s -H "Authorization: Bearer not-needed" http://127.0.0.1:8000/v1/models
 """
@@ -34,7 +34,7 @@ except ImportError:
 
 def main():
     p = argparse.ArgumentParser(description="Test vLLM OpenAI-compatible API")
-    p.add_argument("--host", default="127.0.0.1", help="vLLM server (default: 127.0.0.1 for tunnel)")
+    p.add_argument("--host", default=os.environ.get("VLLM_HOST", "127.0.0.1"), help="vLLM server (default: 127.0.0.1 for tunnel, or set VLLM_HOST)")
     p.add_argument("--port", type=int, default=8000, help="vLLM server port")
     p.add_argument("--model", default=None, help="Model name (default: use server default)")
     args = p.parse_args()

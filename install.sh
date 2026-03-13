@@ -185,8 +185,8 @@ else
     fi
 fi
 # --- Main vLLM config (MiniMax-M2.1 230B MoE for H200; use vllm-openai:nightly if :latest lacks MiniMax support) ---
-GPU_ID="0,1,2,3,4,5,6,7"
-PORT=8000
+GPU_ID="${GPU_ID:-0,1,2,3,4,5,6,7}"
+PORT="${PORT:-8000}"
 # Bind port to host IP so Docker creates listen+NAT for it. Optional: set VLLM_HOST_IP to override.
 if [ -z "$VLLM_HOST_IP" ]; then
     VLLM_HOST_IP=$(ip -4 addr show bond0 2>/dev/null | sed -n 's/.*inet \([0-9.]*\)\/.*/\1/p')
